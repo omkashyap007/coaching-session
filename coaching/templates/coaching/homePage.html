@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Coaching Platform</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f5f6f8;
+        }
+
+        header {
+            background: #4A6CF7;
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logout {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            background: #ff3d55;
+            padding: 10px 15px;
+            border-radius: 6px;
+        }
+
+        .container {
+            width: 85%;
+            margin: 30px auto;
+        }
+
+        h2 {
+            color: #333;
+            margin-top: 35px;
+        }
+
+        .card {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0px 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .card a {
+            background: #4A6CF7;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            text-decoration: none;
+            margin-top: 8px;
+            display: inline-block;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #ffe056;
+            color: #333;
+            padding: 5px 10px;
+            border-radius: 6px;
+            margin-top: 5px;
+            font-size: 13px;
+        }
+
+        .sessions-list div {
+            margin-bottom: 6px;
+        }
+
+        .empty-text {
+            color: #777;
+            font-style: italic;
+            padding: 10px;
+        }
+    </style>
+
+</head>
+<body>
+
+<header>
+    <div>
+        <strong>{{ user.email }}</strong> 
+        <span class="badge">{{ user.user_type|capfirst }}</span>
+    </div>
+
+    <a href="{% url 'logout' %}" class="logout">Logout</a>
+</header>
+
+<div class="container">
+
+    
+    {% if user.user_type == "student" %}
+        <h2>Available Experts</h2>
+        {% if experts %}
+            {% for expert in experts %}
+                <div class="card">
+                    <strong>Email:</strong> {{ expert.email }} <br>
+                    <strong>ID:</strong> {{ expert.id }} <br><br>
+
+                    <a href="{% url 'create-session' expert_id=expert.id %}">Book Session</a>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="empty-text">No experts available right now.</div>
+        {% endif %}
+    {% endif %}
+
+
+<h2>Your Sessions</h2>
+
+<div class="sessions-list">
+    {% if sessions %}
+        {% for session in sessions %}
+            <div class="card">
+
+                <strong>Session ID:</strong> {{ session.id }} <br>
+                <strong>Start:</strong> {{ session.start_time }} <br>
+                <strong>End:</strong> {{ session.end_time }} <br>
+                <strong>End:</strong> {{ session.state }} <br><br>
+
+                {% if session.state != "completed" %}
+                    <a href="{% url 'join-session' session_id=session.id %}">
+                        Join Session
+                    </a>
+                {% endif %}
+
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="empty-text">No upcoming or previous sessions.</div>
+    {% endif %}
+</div>
+
+</div>
+
+</body>
+</html>

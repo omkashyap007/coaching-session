@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Coaching Session</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f5f6f8;
+        }
+
+        header {
+            background: #4A6CF7;
+            padding: 15px 20px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        a.back {
+            background: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            text-decoration: none;
+            color: #4A6CF7;
+            font-weight: bold;
+        }
+
+        .container {
+            width: 85%;
+            margin: 35px auto;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .session-card {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        form {
+            margin-top: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 15px;
+        }
+
+        button {
+            margin-top: 20px;
+            width: 100%;
+            background: #4A6CF7;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #3956db;
+        }
+
+        .msg-box {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 15px;
+            background: #ffdcdc;
+            border-left: 4px solid #ff3d3d;
+            color: #b00202;
+        }
+
+        .empty {
+            font-style: italic;
+            color: #777;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h3>Coaching Session Booking</h3>
+    <a href="{% url 'home' %}" class="back">⬅ Back</a>
+</header>
+
+<div class="container">
+
+
+    <h2>Book a Session with expert : {{ expert_id }}</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <label for="start">Start Time</label>
+        <input type="datetime-local" name="start_time" id="start" required>
+
+        <label for="end">End Time</label>
+        <input type="datetime-local" name="end_time" id="end" required>
+
+        <button type="submit">Create Session</button>
+    </form>
+
+    {% if messages %}
+        <div class="msg-box">
+        {% for message in messages %}
+            {{ message }}<br>
+        {% endfor %}
+        </div>
+    {% endif %}
+
+</div>
+
+</body>
+</html>
