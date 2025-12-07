@@ -1,0 +1,26 @@
+# Byte-code files
+*.pyc
+__pycache__/
+
+# Virtual environment
+env/
+venv/
+.venv/
+
+# Django-specific files
+db.sqlite3
+media/
+static_cdn/ # Or whatever your collected static files directory is named
+local_settings.py # If you use a separate file for local settings
+
+# IDE-specific files (e.g., VS Code, PyCharm)
+.vscode/
+.idea/
+
+# Operating System generated files
+.DS_Store
+Thumbs.db
+
+# Logs and temporary files
+*.log
+tmp/

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+
+    <style>
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(120deg, #4a6cf7, #6c8efe);
+        }
+
+        .signup-box {
+            background: #fff;
+            width: 360px;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            animation: fadeIn 0.4s ease;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            margin-top: 12px;
+            color: #444;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-top: 5px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 15px;
+            transition: .2s;
+        }
+
+        input:focus {
+            border-color: #4a6cf7;
+            outline: none;
+            box-shadow: 0 0 5px rgba(74,108,247,0.4);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            margin-top: 18px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .toggle-btn {
+            background: #007bff;
+            color: white;
+        }
+
+        .toggle-btn:hover {
+            background: #0067d1;
+        }
+
+        .submit-btn {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .submit-btn:hover {
+            background: #3e9b43;
+        }
+
+        .message {
+            background: #ffe0e0;
+            color: #b00202;
+            padding: 10px;
+            border-left: 4px solid red;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .footer-text {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .footer-text a {
+            font-weight: bold;
+            text-decoration: none;
+            color: #4a6cf7;
+        }
+
+        .footer-text a:hover {
+            text-decoration: underline;
+        }
+
+        @keyframes fadeIn {
+            from {opacity: 0; transform: translateY(10px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="signup-box">
+
+    {% if messages %}
+        <div class="message">
+            {% for message in messages %}
+                {{ message }}<br>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <h2 id="title">
+        Registering as 
+        {% if user_type %}
+            {{ user_type|title }}
+        {% else %}
+            Student
+        {% endif %}
+    </h2>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <!-- Default user_type handling -->
+        <input type="hidden" id="userTypeField" name="user_type" value="{{ user_type|default:'student' }}">
+
+        <label>Email</label>
+        <input type="email" name="email" placeholder="Enter your email" required>
+
+        <label>Password</label>
+        <input type="password" name="password1" placeholder="Create a password" required>
+
+        <label>Confirm Password</label>
+        <input type="password" name="password2" placeholder="Repeat password" required>
+
+        <button type="button" class="btn toggle-btn" onclick="changeUserType()" id="toggleBtn">
+            Register as {% if user_type == "expert" %}Student{% else %}Expert{% endif %}
+        </button>
+
+        <button type="submit" class="btn submit-btn">Create Account</button>
+
+        <div class="footer-text">
+            Already have an account?
+            <a href="{% url 'login' %}">Login</a>
+        </div>
+    </form>
+</div>
+
+<script>
+    let user_type = "{{ user_type|default:'student' }}";
+
+    function changeUserType() {
+        user_type = (user_type === "student") ? "expert" : "student";
+
+        document.getElementById("userTypeField").value = user_type;
+        document.getElementById("title").textContent = `Registering as ${user_type.charAt(0).toUpperCase() + user_type.slice(1)}`;
+        document.getElementById("toggleBtn").textContent = `Register as ${user_type === "student" ? "Expert" : "Student"}`;
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session Room</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #f4f4f4;
+        }
+
+        .container {
+            background: white;
+            width: 350px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .info {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            background: #4CAF50;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: #3e9e45;
+        }
+
+        .leave {
+            margin-top: 12px;
+            background: #d9534f;
+        }
+
+        .leave:hover {
+            background: #c94440;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <h2>Coaching Session</h2>
+    <p><strong>Session ID:</strong> {{ session_id }}</p>
+
+    <div class="info">
+        <strong>Student: </strong> {{ student_email }} <br>
+        <strong>Expert: </strong> {{ expert_email }}
+    </div>
+
+    <form method="post" action="{% url 'complete-session' session_id %}">
+        {% csrf_token %}
+        <button type="submit">Complete Session</button>
+    </form>
+
+</div>
+
+</body>
+</html>
