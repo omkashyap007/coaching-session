@@ -38,10 +38,10 @@ python manage.py migrate
 python manage.py runserver
 
 ## System Design
-
+```
 **Link1:**  
-![Application Structure](https://github.com/omkashyap007/coaching-session/blob/master/images/application_structure.png)
+**Link1:**  
+![Application Structure](https://raw.githubusercontent.com/omkashyap007/coaching-session/master/images/application_structure.png)
 
 **Link2:**  
-![System Design](https://github.com/omkashyap007/coaching-session/blob/master/images/system_design.png)
-s
+![System Design](https://raw.githubusercontent.com/omkashyap007/coaching-session/master/images/system_design.png)
