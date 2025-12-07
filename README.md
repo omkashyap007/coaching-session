@@ -40,7 +40,7 @@ python manage.py runserver
 ## System Design
 
 **Link1:**  
-![Link1](images/application_structure.png)
+![Link1](https://raw.githubusercontent.com/omkashyap007/coaching-session/master/images/application_structure.png)
 
 **Link2:**  
-![Link2](images/system_design.png)
+![Link2](https://raw.githubusercontent.com/omkashyap007/coaching-session/master/images/system_design.png)
