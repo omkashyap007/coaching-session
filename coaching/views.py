@@ -34,7 +34,9 @@ def homePage(request, *args, **kwargs):
                 "id": session.id,
                 "start_time": session.start_time,
                 "end_time": session.end_time,
-                "state": session.state
+                "state": session.state,
+                "expert_id": session.expert_id,
+                "expert_email": session.expert.email
             }
         )
     if user.user_type == UserTypeChoices.student:
@@ -58,7 +60,7 @@ def createSessions(request, expert_id):
     if request.method == "POST":
         session_start_time = request.POST.get("start_time")
         session_end_time = request.POST.get("end_time")
-
+        print(session_start_time, session_end_time)
         try:
             session_start_time = datetime.fromisoformat(session_start_time)
             session_end_time = datetime.fromisoformat(session_end_time)
@@ -67,13 +69,14 @@ def createSessions(request, expert_id):
             return redirect("create-session", expert_id=expert_id)
 
         overlap_filter = (
+            (Q(expert_id=expert_id) | Q(student=request.user)) &
             (
-                Q(expert_id=expert_id) | Q(student=request.user)
-            ) & 
-            (
-                Q(start_time__lt=session_end_time) & Q(end_time__gt=session_start_time)
+                Q(start_time__lte=session_start_time, end_time__gt=session_start_time) |
+                Q(start_time__lt=session_end_time, end_time__gte=session_end_time) |
+                Q(start_time__gte=session_start_time, end_time__lte=session_end_time)
             )
         )
+
         print(f"Filter : {overlap_filter}")
         existing_sessions = CoachingSession.objects.filter(expert_id=expert_id).filter(overlap_filter)
 

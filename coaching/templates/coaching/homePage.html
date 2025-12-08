@@ -107,7 +107,7 @@
             {% endfor %}
         {% else %}
             <div class="empty-text">No experts available right now.</div>
-        {% endif %}
+        {% endif %} 
     {% endif %}
 
 
@@ -121,7 +121,9 @@
                 <strong>Session ID:</strong> {{ session.id }} <br>
                 <strong>Start:</strong> {{ session.start_time }} <br>
                 <strong>End:</strong> {{ session.end_time }} <br>
-                <strong>End:</strong> {{ session.state }} <br><br>
+                <strong>State:</strong> {{ session.state }} <br>
+                <strong>Expert ID :</strong> {{ session.expert_id }} <br><br>
+
 
                 {% if session.state != "completed" %}
                     <a href="{% url 'join-session' session_id=session.id %}">
